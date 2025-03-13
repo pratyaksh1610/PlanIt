@@ -6,6 +6,7 @@ const toastLiveExample = document.getElementById('liveToast')
 const themeBtn = document.getElementById('themeBtn')
 
 getSampleData()
+setTheme()
 
 // control theme
 themeBtn.addEventListener('click',() => {
@@ -13,8 +14,10 @@ themeBtn.addEventListener('click',() => {
     console.log(domHTML.getAttribute('data-bs-theme'));
     if(domHTML.getAttribute('data-bs-theme') === "dark") {
         domHTML.setAttribute('data-bs-theme','light')
+        localStorage.setItem('theme',"light")
     } else if (domHTML.getAttribute('data-bs-theme') === "light"){
         domHTML.setAttribute('data-bs-theme','dark')
+        localStorage.setItem('theme',"dark")
     }
 })
 
@@ -153,4 +156,18 @@ function getSampleData() {
 function randomTasks(element) {
     const newTaskListItem = createTask(element)
     taskList.appendChild(newTaskListItem)
+}
+
+function setTheme() {
+    const theme = localStorage.getItem('theme')
+    const domHTML = document.getElementById('parent')
+    console.log(theme);
+    
+    if(theme === null) {
+        localStorage.setItem('theme',"dark")
+    }else if(theme === "light"){
+        domHTML.setAttribute('data-bs-theme','light')
+    }else if(theme === "dark") {
+        domHTML.setAttribute('data-bs-theme','dark')
+    }
 }
