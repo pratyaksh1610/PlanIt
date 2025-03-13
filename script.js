@@ -4,6 +4,8 @@ const taskList = document.getElementById('taskList')
 const clearAll = document.getElementById('clearBtn')
 const toastLiveExample = document.getElementById('liveToast')
 
+getSampleData()
+
 addBtn.addEventListener('click', () => {
     computeIt()
 })
@@ -36,6 +38,7 @@ function createTask(getTask) {
     const newTaskListItem = document.createElement('li')
         
         newTaskListItem.classList.add('list-group-item')
+        newTaskListItem.classList.add('list-group-item-action')
         newTaskListItem.classList.add('d-flex')
         newTaskListItem.classList.add('justify-content-start')
         newTaskListItem.classList.add('align-items-center')
@@ -122,4 +125,15 @@ function getCompletionCheckBoxButton() {
     getCompletionTask.appendChild(getInput)
 
     return getCompletionTask        
+}
+
+// sample data
+function getSampleData() {
+    const data = ["Play with Josh", "Learn Javascript", "Go to gym", "Work on drawing"]
+    data.forEach(randomTasks)
+}
+
+function randomTasks(element) {
+    const newTaskListItem = createTask(element)
+    taskList.appendChild(newTaskListItem)
 }
