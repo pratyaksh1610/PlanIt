@@ -10,14 +10,10 @@ getSampleData()
 // control theme
 themeBtn.addEventListener('click',() => {
     const domHTML = document.getElementById('parent')
-
-    if(domHTML.classList.contains('dark-theme')) {
-        domHTML.classList.remove('dark-theme')
-        domHTML.classList.add('light-theme')
+    console.log(domHTML.getAttribute('data-bs-theme'));
+    if(domHTML.getAttribute('data-bs-theme') === "dark") {
         domHTML.setAttribute('data-bs-theme','light')
-    } else if (domHTML.classList.contains('light-theme')){
-        domHTML.classList.remove('light-theme')
-        domHTML.classList.add('dark-theme')
+    } else if (domHTML.getAttribute('data-bs-theme') === "light"){
         domHTML.setAttribute('data-bs-theme','dark')
     }
 })
