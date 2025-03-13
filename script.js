@@ -4,13 +4,13 @@ const taskList = document.getElementById('taskList')
 const clearAll = document.getElementById('clearBtn')
 const toastLiveExample = document.getElementById('liveToast')
 const themeBtn = document.getElementById('themeBtn')
+const domHTML = document.getElementById('parent')
 
 getSampleData()
 setTheme()
 
 // control theme
 themeBtn.addEventListener('click',() => {
-    const domHTML = document.getElementById('parent')
     console.log(domHTML.getAttribute('data-bs-theme'));
     if(domHTML.getAttribute('data-bs-theme') === "dark") {
         domHTML.setAttribute('data-bs-theme','light')
@@ -160,7 +160,6 @@ function randomTasks(element) {
 
 function setTheme() {
     const theme = localStorage.getItem('theme')
-    const domHTML = document.getElementById('parent')
     console.log(theme);
     
     if(theme === null) {
