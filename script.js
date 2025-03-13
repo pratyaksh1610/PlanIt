@@ -3,8 +3,24 @@ const addBtn = document.getElementById('addBtn')
 const taskList = document.getElementById('taskList')
 const clearAll = document.getElementById('clearBtn')
 const toastLiveExample = document.getElementById('liveToast')
+const themeBtn = document.getElementById('themeBtn')
 
 getSampleData()
+
+// control theme
+themeBtn.addEventListener('click',() => {
+    const domHTML = document.getElementById('parent')
+
+    if(domHTML.classList.contains('dark-theme')) {
+        domHTML.classList.remove('dark-theme')
+        domHTML.classList.add('light-theme')
+        domHTML.setAttribute('data-bs-theme','light')
+    } else if (domHTML.classList.contains('light-theme')){
+        domHTML.classList.remove('light-theme')
+        domHTML.classList.add('dark-theme')
+        domHTML.setAttribute('data-bs-theme','dark')
+    }
+})
 
 addBtn.addEventListener('click', () => {
     computeIt()
