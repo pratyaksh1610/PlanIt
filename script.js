@@ -8,6 +8,14 @@ addBtn.addEventListener('click', () => {
     computeIt()
 })
 
+inputTask.addEventListener('keydown',(e)=> {
+    if(e.key === 'Enter') {
+        e.preventDefault() // prevent form submission
+        computeIt()
+    }
+
+})
+
 function computeIt() {
     
     const data = Array(localStorage.getItem('task'))
