@@ -18,8 +18,6 @@ inputTask.addEventListener('keydown',(e)=> {
 
 function computeIt() {
     
-    const data = Array(localStorage.getItem('task'))
-    console.log(data);
     const getTask = inputTask.value
     if(getTask !== ""){
 
