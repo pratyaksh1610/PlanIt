@@ -44,7 +44,7 @@ function createTask(getTask) {
         newTaskListItem.classList.add('align-items-center')
 
         const completionTaskCheckBox = getCompletionCheckBoxButton()
-        
+      
         const deleteTaskBtn = getDeleteTaskButton()
 
         deleteTaskBtn.addEventListener('click',() => {
@@ -61,9 +61,17 @@ function createTask(getTask) {
             newTaskListItem.classList.add('striked-off')
         })
 
+        const editTaskBtn = document.createElement('i')
+        editTaskBtn.classList.add('bi')
+        editTaskBtn.classList.add('bi-pencil-square')
+        editTaskBtn.classList.add('ms-auto')
+        editTaskBtn.setAttribute('id','editBtn')
+
         newTaskListItem.appendChild(completionTaskCheckBox)
         newTaskListItem.appendChild(textNode)
+        newTaskListItem.appendChild(editTaskBtn)
         newTaskListItem.appendChild(deleteTaskBtn)
+
         return newTaskListItem;
 }
 
@@ -82,10 +90,9 @@ function getDeleteTaskButton() {
     const closeBtn = document.createElement('button')
 
     closeBtn.classList.add('btn-close')
-    closeBtn.classList.add('ms-5')
     closeBtn.setAttribute("type","button")
     closeBtn.setAttribute("aria-label","Close")
-    closeBtn.classList.add('ms-auto')
+    closeBtn.classList.add('ms-3')
 
     return closeBtn;
 }
