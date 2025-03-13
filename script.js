@@ -34,7 +34,6 @@ function computeIt() {
 
 function createTask(getTask) {
     const newTaskListItem = document.createElement('li')
-        const textNode = document.createTextNode(getTask);
         
         newTaskListItem.classList.add('list-group-item')
         newTaskListItem.classList.add('d-flex')
@@ -60,6 +59,17 @@ function createTask(getTask) {
         })
 
         const editTaskBtn = getEditTaskButton()
+
+        const textNode = document.createElement('span')
+        textNode.innerText = getTask
+
+        editTaskBtn.addEventListener('click', () => {
+            const editMessage = prompt("Edit task !")
+            console.log(editMessage);
+            if(editMessage) {
+                textNode.innerText = editMessage  
+            }          
+        })
 
         newTaskListItem.appendChild(completionTaskCheckBox)
         newTaskListItem.appendChild(textNode)
