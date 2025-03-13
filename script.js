@@ -61,11 +61,7 @@ function createTask(getTask) {
             newTaskListItem.classList.add('striked-off')
         })
 
-        const editTaskBtn = document.createElement('i')
-        editTaskBtn.classList.add('bi')
-        editTaskBtn.classList.add('bi-pencil-square')
-        editTaskBtn.classList.add('ms-auto')
-        editTaskBtn.setAttribute('id','editBtn')
+        const editTaskBtn = getEditTaskButton()
 
         newTaskListItem.appendChild(completionTaskCheckBox)
         newTaskListItem.appendChild(textNode)
@@ -75,6 +71,14 @@ function createTask(getTask) {
         return newTaskListItem;
 }
 
+function getEditTaskButton() {
+    const editTaskBtn = document.createElement('i')
+    editTaskBtn.classList.add('bi')
+    editTaskBtn.classList.add('bi-pencil-square')
+    editTaskBtn.classList.add('ms-auto')
+    editTaskBtn.setAttribute('id','editBtn')
+    return editTaskBtn
+}
 
 // delete all tasks
 clearAll.addEventListener('click', () => {
