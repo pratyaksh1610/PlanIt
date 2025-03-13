@@ -52,11 +52,16 @@ function createTask(getTask) {
         })
 
         completionTaskCheckBox.children[0].addEventListener('click', () => {
+            const editBtn = newTaskListItem.childNodes[2]
             if(newTaskListItem.classList.contains('striked-off')) {
                 newTaskListItem.classList.remove('text-decoration-line-through')
                 newTaskListItem.classList.remove('striked-off')
+                editBtn.classList.add('visible')
+                editBtn.classList.remove('invisible')
                 return
             }
+            editBtn.classList.remove('visible')
+            editBtn.classList.add('invisible')
             newTaskListItem.classList.add('text-decoration-line-through')
             newTaskListItem.classList.add('striked-off')
         })
