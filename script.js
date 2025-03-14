@@ -208,6 +208,7 @@ function setTasks() {
         setTaskListEmpty()
         parseLocal.forEach((e) => {
         const newTaskListItem = createTask(e.text)
+        newTaskListItem.setAttribute('localId', e.id); 
         taskList.appendChild(newTaskListItem)
         })
     }
@@ -216,8 +217,11 @@ function setTasks() {
 
 function getTaskArrayFromLocalStorage() {
     const localTasks = localStorage.getItem('tasks');
-    const parseLocal = JSON.parse(localTasks)
-    return parseLocal
+    if(localTasks) {
+        const parseLocal = JSON.parse(localTasks)
+        return parseLocal
+    }
+    return []
 }
 
 function setTaskListEmpty() {
