@@ -15,9 +15,13 @@ themeBtn.addEventListener('click',() => {
     if(domHTML.getAttribute('data-bs-theme') === "dark") {
         domHTML.setAttribute('data-bs-theme','light')
         localStorage.setItem('theme',"light")
+        themeBtn.classList.remove('bi-sun-fill')
+        themeBtn.classList.add('bi-moon-fill')
     } else if (domHTML.getAttribute('data-bs-theme') === "light"){
         domHTML.setAttribute('data-bs-theme','dark')
         localStorage.setItem('theme',"dark")
+        themeBtn.classList.add('bi-sun-fill')
+        themeBtn.classList.remove('bi-moon-fill')
     }
 })
 
@@ -211,8 +215,12 @@ function setTheme() {
     if(theme === null) {
         localStorage.setItem('theme',"dark")
     }else if(theme === "light"){
+        themeBtn.classList.remove('bi-sun-fill')
+        themeBtn.classList.add('bi-moon-fill')
         domHTML.setAttribute('data-bs-theme','light')
     }else if(theme === "dark") {
+        themeBtn.classList.add('bi-sun-fill')
+        themeBtn.classList.remove('bi-moon-fill')
         domHTML.setAttribute('data-bs-theme','dark')
     }
 }
