@@ -6,8 +6,8 @@ const toastLiveExample = document.getElementById('liveToast')
 const themeBtn = document.getElementById('themeBtn')
 const domHTML = document.getElementById('parent')
 
-getSampleData()
 setTheme()
+setTasks()
 
 // control theme
 themeBtn.addEventListener('click',() => {
@@ -23,6 +23,7 @@ themeBtn.addEventListener('click',() => {
 
 addBtn.addEventListener('click', () => {
     computeIt()
+    setTasks()
 })
 
 inputTask.addEventListener('keydown',(e)=> {
@@ -34,13 +35,12 @@ inputTask.addEventListener('keydown',(e)=> {
 })
 
 function computeIt() {
-    
     const getTask = inputTask.value
     if(getTask !== ""){
 
         const newTaskListItem = createTask(getTask)
-        taskList.appendChild(newTaskListItem)
-        
+        setDataInLocalStorage(getTask,newTaskListItem)
+        taskList.append(newTaskListItem)    
         inputTask.value = ""
 
     }else {
@@ -98,8 +98,24 @@ function createTask(getTask) {
         newTaskListItem.appendChild(textNode)
         newTaskListItem.appendChild(editTaskBtn)
         newTaskListItem.appendChild(deleteTaskBtn)
-
+        newTaskListItem.setAttribute("localId",Date.now())
         return newTaskListItem;
+}
+
+function setDataInLocalStorage(getTask,newTaskListItem) {
+    let arr = []
+    const taskObj = {
+            id : newTaskListItem.getAttribute('localId'),
+            text : getTask,
+            markAsComplete: false
+    }
+    const getLocal = localStorage.getItem('tasks')
+    const parsedLocal = JSON.parse(getLocal)
+    if(parsedLocal) {
+        arr = [...parsedLocal]
+    }
+    arr.push(taskObj)
+    localStorage.setItem('tasks',JSON.stringify(arr))
 }
 
 function getEditTaskButton() {
@@ -114,10 +130,8 @@ function getEditTaskButton() {
 // delete all tasks
 clearAll.addEventListener('click', () => {
     inputTask.value = ""
-    while(taskList.hasChildNodes()) {
-        taskList.removeChild(taskList.lastChild)
-    }
-    
+    taskList.innerHTML = ''
+    localStorage.removeItem('tasks')
 })
 
 // get delete task button
@@ -169,4 +183,19 @@ function setTheme() {
     }else if(theme === "dark") {
         domHTML.setAttribute('data-bs-theme','dark')
     }
+}
+
+// if tasks are saved
+function setTasks() {
+    const localTasks = localStorage.getItem('tasks');
+    const parseLocal = JSON.parse(localTasks)
+    console.log("tasks : ",parseLocal);
+    if(parseLocal) {
+        taskList.innerHTML = ""
+        parseLocal.forEach((e) => {
+        const newTaskListItem = createTask(e.text)
+        taskList.appendChild(newTaskListItem)
+        })
+    }
+
 }
