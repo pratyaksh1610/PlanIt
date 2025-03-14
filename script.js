@@ -72,14 +72,31 @@ function createTask(getTask) {
         })
 
         completionTaskCheckBox.children[0].addEventListener('click', () => {
+            const data = [...getTaskArrayFromLocalStorage()]
+            console.log("Data is ",data);
+
             const editBtn = newTaskListItem.childNodes[2]
             if(newTaskListItem.classList.contains('striked-off')) {
                 newTaskListItem.classList.remove('text-decoration-line-through')
                 newTaskListItem.classList.remove('striked-off')
                 editBtn.classList.add('visible')
                 editBtn.classList.remove('invisible')
+                data.forEach((e)=>  {
+                    if(e.id === newTaskListItem.getAttribute('localId')){
+                        e.markAsComplete=false
+                    }            
+                })
+                localStorage.setItem('tasks',JSON.stringify(data))
+    
                 return
             }
+            data.forEach((e)=>  {
+                if(e.id === newTaskListItem.getAttribute('localId')){
+                    e.markAsComplete=true
+                }            
+            })
+            localStorage.setItem('tasks',JSON.stringify(data))
+
             editBtn.classList.remove('visible')
             editBtn.classList.add('invisible')
             newTaskListItem.classList.add('text-decoration-line-through')
@@ -209,6 +226,14 @@ function setTasks() {
         parseLocal.forEach((e) => {
         const newTaskListItem = createTask(e.text)
         newTaskListItem.setAttribute('localId', e.id); 
+        if(e.markAsComplete) {         
+            newTaskListItem.children[0].children[0].checked = true
+            const editBtn = newTaskListItem.childNodes[2]
+            editBtn.classList.remove('visible')
+            editBtn.classList.add('invisible')
+            newTaskListItem.classList.add('text-decoration-line-through')
+            newTaskListItem.classList.add('striked-off')
+        }
         taskList.appendChild(newTaskListItem)
         })
     }
