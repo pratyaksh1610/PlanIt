@@ -57,12 +57,17 @@ function createTask(getTask) {
         newTaskListItem.classList.add('d-flex')
         newTaskListItem.classList.add('justify-content-start')
         newTaskListItem.classList.add('align-items-center')
+        newTaskListItem.setAttribute("localId",Date.now())
 
         const completionTaskCheckBox = getCompletionCheckBoxButton()
       
         const deleteTaskBtn = getDeleteTaskButton()
 
         deleteTaskBtn.addEventListener('click',() => {
+            const data = [...getTaskArrayFromLocalStorage()]
+            console.log("Data is ",data);
+            const filteredData = data.filter((e)=>  e.id !== newTaskListItem.getAttribute('localId'))
+            localStorage.setItem('tasks',JSON.stringify(filteredData))
             taskList.removeChild(newTaskListItem)
         })
 
@@ -91,6 +96,18 @@ function createTask(getTask) {
             console.log(editMessage);
             if(editMessage) {
                 textNode.innerText = editMessage  
+                
+            const data = [...getTaskArrayFromLocalStorage()]
+            console.log("Data is ",data);
+            data.forEach((e)=>  {
+                console.log(e.id,newTaskListItem.getAttribute('localId'));
+                
+                 if(e.id === newTaskListItem.getAttribute('localId')){
+                    e.text = editMessage 
+                }
+            })
+            localStorage.setItem('tasks',JSON.stringify(data))
+
             }          
         })
 
@@ -98,7 +115,6 @@ function createTask(getTask) {
         newTaskListItem.appendChild(textNode)
         newTaskListItem.appendChild(editTaskBtn)
         newTaskListItem.appendChild(deleteTaskBtn)
-        newTaskListItem.setAttribute("localId",Date.now())
         return newTaskListItem;
 }
 
@@ -109,8 +125,7 @@ function setDataInLocalStorage(getTask,newTaskListItem) {
             text : getTask,
             markAsComplete: false
     }
-    const getLocal = localStorage.getItem('tasks')
-    const parsedLocal = JSON.parse(getLocal)
+    const parsedLocal =  getTaskArrayFromLocalStorage()
     if(parsedLocal) {
         arr = [...parsedLocal]
     }
@@ -130,7 +145,7 @@ function getEditTaskButton() {
 // delete all tasks
 clearAll.addEventListener('click', () => {
     inputTask.value = ""
-    taskList.innerHTML = ''
+    setTaskListEmpty()
     localStorage.removeItem('tasks')
 })
 
@@ -187,15 +202,24 @@ function setTheme() {
 
 // if tasks are saved
 function setTasks() {
-    const localTasks = localStorage.getItem('tasks');
-    const parseLocal = JSON.parse(localTasks)
+    const parseLocal = getTaskArrayFromLocalStorage()
     console.log("tasks : ",parseLocal);
     if(parseLocal) {
-        taskList.innerHTML = ""
+        setTaskListEmpty()
         parseLocal.forEach((e) => {
         const newTaskListItem = createTask(e.text)
         taskList.appendChild(newTaskListItem)
         })
     }
 
+}
+
+function getTaskArrayFromLocalStorage() {
+    const localTasks = localStorage.getItem('tasks');
+    const parseLocal = JSON.parse(localTasks)
+    return parseLocal
+}
+
+function setTaskListEmpty() {
+      taskList.innerHTML = ""
 }
